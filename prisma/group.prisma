@@ -1,0 +1,70 @@
+model Group {
+    id              Int             
+    name            String
+    PhotoUrl        String
+    descrition      String
+    tags            GroupTag[]
+    goalReps        Int
+    //likeCount     Int 
+    badges          Badge[]
+    createdAt       DateTime     @default(now())
+    updatedAt       DateTime     @updatedAt
+    ownerId         Int
+    owner           Owner @unique
+
+    likes           Like
+}   
+
+model Owner {
+    id              Int
+    nickname        String 
+    password        String
+    
+    groupId         Int
+    group           Group         @relation(fields: [groupId], references: [id])      
+    ParticipantId   Int
+    Participants    Participant[] @relation(fields:[ParticipantId], references:[id])
+}
+
+model Participant {
+    id          Int             @id @autoincrement()
+    nickname    String          @unique
+    password    String
+    groupId     Int         
+    group       Group           @relation(fields :[groupId], references : [id])
+
+    createdAt    DateTime       @default(now())
+    updatedAt    DateTime       @updatedAt
+    
+}
+
+model Tag{
+    id      Int
+    name    String
+
+    GroupTags GroupTag[]
+}
+
+model Like { // 조인 테이블 
+    id              Int
+    
+    ParticipantId   Int
+    Participant     Participant     @relation(fields: [ParticipantId], references:[id])
+    groupId         Int
+    groups          Groups           @relation(fields:[groupId], references:[id])
+
+    @@unique(ParticipantId, groupId)
+}
+
+
+model GroupTag{ //조인테이블 
+    id          Int
+
+    tagId       Int         
+    tags        Tag         @relation(fields:[tagId], references:[id])
+    groupId     Int     
+    groups      Groups      @relation(fields:[groupId], references:[id])
+   
+    
+    @@unique(tagId, groupId)
+}

@@ -1,0 +1,28 @@
+enum ExerciseType = {
+    RUN, 
+    FOOTBALL,
+    CROSSFIT,
+    WEIGHT TRAINNING,
+    SWIM
+}
+
+model Record {
+    id              Int         @id
+    descrition      String
+    exerciseTypes   ExerciseType
+    distance        Int
+    photos          Photo[]
+    
+    aurthor         Author        @unique
+    authorId        Int
+    total           Int
+    createdAt       DateTime       
+}
+
+model Author {
+    id              Int
+    nickname        String
+    recordId        Int
+    record          Record      @relation(fields:[recordId], references[id])
+}
+

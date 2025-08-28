@@ -1,0 +1,15 @@
+{
+  "name": "refactoring-code",
+  "version": "1.0.0",
+  "main": "Record.controller.js",
+  "scripts": {
+    "test": "node"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@prisma/client": "^6.14.0",
+    "express": "^5.1.0"
+  }
+}
